@@ -9,7 +9,7 @@ import scalafx.animation.AnimationTimer
 import scalafx.scene.paint.Color
 import scalafx.scene.input.MouseEvent
 
-object ParticleSystemApp extends JFXApp {
+object ParticleSystemApp extends JFXApp with Rainbowness {
   stage = new JFXApp.PrimaryStage {
     title = "Particles!"
     scene = new Scene(800,800) {
@@ -20,11 +20,11 @@ object ParticleSystemApp extends JFXApp {
       var pslist = List[ParticleSystem]() 
       
       canvas.onMouseClicked = (e:MouseEvent) => {
-        pslist ::= new ParticleSystem(Vec2(e.x, e.y))
+        pslist ::= new RainbowParticleSystem(Vec2(e.x, e.y))
       }
 
       val timer = AnimationTimer(t => {
-        g.setFill(Color.White)
+        g.setFill(stepColor())
         g.fillRect(0,0, width.value,height.value)
         g.setFill(Color.rgb(40,80,200,0.2))
         for(ps <- pslist) {
