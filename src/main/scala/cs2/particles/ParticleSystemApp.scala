@@ -7,6 +7,7 @@ import scalafx.scene.canvas.Canvas
 import cs2.util.Vec2
 import scalafx.animation.AnimationTimer
 import scalafx.scene.paint.Color
+import scalafx.scene.input.MouseEvent
 
 object ParticleSystemApp extends JFXApp {
   stage = new JFXApp.PrimaryStage {
@@ -16,16 +17,22 @@ object ParticleSystemApp extends JFXApp {
       content = canvas
       val g = canvas.graphicsContext2D
 
-      val ps = new ParticleSystem(Vec2(400,100))
+      var pslist = List[ParticleSystem]() 
+      
+      canvas.onMouseClicked = (e:MouseEvent) => {
+        pslist ::= new ParticleSystem(Vec2(e.x, e.y))
+      }
 
       val timer = AnimationTimer(t => {
         g.setFill(Color.White)
         g.fillRect(0,0, width.value,height.value)
         g.setFill(Color.rgb(40,80,200,0.2))
-        ps.display(g)
-        ps.timeStep()
-        //ps.applyForce(Vec2(0,0.005))
-        ps.addParticle()
+        for(ps <- pslist) {
+          ps.display(g)
+          ps.timeStep()
+          ps.applyForce(Vec2(0,0.005))
+          ps.addParticle()
+        }
       })
       timer.start
 
