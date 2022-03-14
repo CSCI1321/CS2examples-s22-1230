@@ -20,7 +20,13 @@ object ParticleSystemApp extends JFXApp with Rainbowness {
       var pslist = List[ParticleSystem]() 
       
       canvas.onMouseClicked = (e:MouseEvent) => {
-        pslist ::= new RainbowParticleSystem(Vec2(e.x, e.y))
+        pslist ::= new ParticleSystem(Vec2(e.x, e.y))
+      }
+
+      var wind = Vec2(0.01,0)
+
+      canvas.onMouseMoved = (e:MouseEvent) => {
+        wind = Vec2(e.x / width.value * 0.02 - 0.01, 0.0)
       }
 
       val timer = AnimationTimer(t => {
@@ -30,7 +36,8 @@ object ParticleSystemApp extends JFXApp with Rainbowness {
         for(ps <- pslist) {
           ps.display(g)
           ps.timeStep()
-          ps.applyForce(Vec2(0,0.005))
+          ps.applyForce(Vec2(0,-0.001))
+          ps.applyForce(wind)
           ps.addParticle()
         }
       })
