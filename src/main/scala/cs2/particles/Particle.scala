@@ -12,6 +12,7 @@ abstract class Particle(protected var pos:Vec2, protected var vel:Vec2) {
   def display(g:GraphicsContext):Unit
   
   //Concrete methods
+  def isDead():Boolean = false
   def timeStep():Unit = {
     pos += vel
   }

@@ -3,9 +3,10 @@ package cs2.particles
 import cs2.util.Vec2
 import scalafx.scene.canvas.GraphicsContext
 import scalafx.scene.shape.StrokeLineCap
+import scala.collection.mutable.Buffer
 
 class ParticleSystem(protected val origin:Vec2) {
-  protected var particles = List[Particle]()
+  protected var particles = Buffer[Particle]()
 
   def addParticle():Unit = {
     /*
@@ -16,7 +17,7 @@ class ParticleSystem(protected val origin:Vec2) {
       particles ::= new SquareParticle(origin.clone(),
                       Vec2(math.random()-0.5, math.random()-0.5))
     }*/
-    particles ::= new ImageParticle(origin.clone(),
+    particles +:= new ImageParticle(origin.clone(),
                       Vec2(math.random()-0.5, math.random()-0.5))
     //*/
   }
@@ -27,6 +28,14 @@ class ParticleSystem(protected val origin:Vec2) {
   }
   def timeStep():Unit = {
     particles.foreach(_.timeStep())
+    /*
+    for(p <- particles) {
+      if(p.isDead()) {
+        particles -= p
+      }
+    }*/
+    particles = particles.filterNot(_.isDead())
+    println(particles.length)
   }
   def applyForce(force:Vec2):Unit = {
     for(p <- particles) p.applyForce(force)
