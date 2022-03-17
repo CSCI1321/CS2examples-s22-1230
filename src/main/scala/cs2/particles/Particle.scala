@@ -4,8 +4,8 @@ import cs2.util.Vec2
 import scalafx.scene.canvas.GraphicsContext
 import scalafx.scene.paint.Color
 
-abstract class Particle(protected var pos:Vec2, protected var vel:Vec2) {
-  protected var r:Double = 20
+abstract class Particle(protected[particles] var pos:Vec2, protected var vel:Vec2) {
+  protected[particles] var r:Double = 20
   protected var c:Color = Color.Red
 
   //Abstract display method

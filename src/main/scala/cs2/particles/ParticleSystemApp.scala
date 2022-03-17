@@ -8,6 +8,8 @@ import cs2.util.Vec2
 import scalafx.animation.AnimationTimer
 import scalafx.scene.paint.Color
 import scalafx.scene.input.MouseEvent
+import scalafx.scene.input.MouseButton
+import scala.collection.mutable.Buffer
 
 object ParticleSystemApp extends JFXApp with Rainbowness {
   stage = new JFXApp.PrimaryStage {
@@ -18,9 +20,14 @@ object ParticleSystemApp extends JFXApp with Rainbowness {
       val g = canvas.graphicsContext2D
 
       var pslist = List[ParticleSystem]() 
+      var erasers = Buffer[Eraser]()
       
       canvas.onMouseClicked = (e:MouseEvent) => {
-        pslist ::= new ParticleSystem(Vec2(e.x, e.y))
+        if(e.isAltDown()) {
+          erasers += new Eraser(Vec2(e.x,e.y), 50)
+        } else {
+          pslist ::= new ParticleSystem(Vec2(e.x, e.y))
+        }
       }
 
       var wind = Vec2(0.01,0)
@@ -39,6 +46,12 @@ object ParticleSystemApp extends JFXApp with Rainbowness {
           ps.applyForce(Vec2(0,-0.001))
           ps.applyForce(wind)
           ps.addParticle()
+        }
+        for(erase <- erasers) {
+          erase.display(g)
+          for(ps <- pslist) {
+            ps.checkForEraser(erase)
+          }
         }
       })
       timer.start

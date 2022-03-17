@@ -40,5 +40,9 @@ class ParticleSystem(protected val origin:Vec2) {
   def applyForce(force:Vec2):Unit = {
     for(p <- particles) p.applyForce(force)
   }
+
+  def checkForEraser(er:Eraser):Unit = {
+    particles = particles.filterNot(x => er.intersectParticle(x))
+  }
   
 }
