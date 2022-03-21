@@ -14,6 +14,18 @@ object ParametricSorting {
     }
   }
 
+  def bubbleSort[A] (arr:Array[A], gt:(A,A)=>Boolean):Unit = {
+    for(j <- 0 until arr.length) {
+      for(i <- 0 until arr.length-1 ) {
+        if(gt(arr(i), arr(i+1))) {
+          val tmp = arr(i)
+          arr(i) = arr(i+1)
+          arr(i+1) = tmp
+        }
+      }
+    }
+  }
+
   class Student(var first:String, var last:String, var gpa:Double) 
                 extends Ordered[Student] {
     override def toString():String = last + ", " + first + ":" + gpa
