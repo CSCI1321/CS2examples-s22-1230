@@ -1,25 +1,25 @@
 package cs2.adt
 
 class ArrayStack[A : Manifest] extends Stack[A] {
-  var arr:Array[A] = Array()
+  var arr:Array[A] = Array.ofDim[A](10)
+  var len:Int = 0
 
   def push(elem:A):Unit = {
-    val tmp:Array[A] = Array.ofDim[A](arr.length + 1)
-    tmp(arr.length) = elem
-    for(i <- 0 until arr.length) {
-      tmp(i) = arr(i)
+    if(len == arr.length) {
+      val tmp = Array.ofDim[A](len * 2)
+      for(i <- 0 until len) {
+        tmp(i) = arr(i)
+      }
+      arr = tmp
     }
-    arr = tmp
+    arr(len) = elem
+    len += 1
   }
   def pop():A = {
-    val tmp:Array[A] = Array.ofDim[A](arr.length -1)
-    for(i <- 0 until tmp.length) {
-      tmp(i) = arr(i)
-    }
-    val ret = arr(arr.length-1)
-    arr = tmp
+    val ret = arr(len-1)
+    len -= 1
     ret
   }
-  def peek():A = { arr(arr.length - 1) }
-  def isEmpty():Boolean = { arr.length == 0 }
+  def peek():A = { arr(len - 1) }
+  def isEmpty():Boolean = { len == 0 }
 }
