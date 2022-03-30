@@ -7,3 +7,8 @@ abstract class Stack[A] {
   def isEmpty():Boolean
 }
 
+object Stack {
+  def apply[A:Manifest]():Stack[A] = {
+    new ArrayStack[A]()
+  }
+}
