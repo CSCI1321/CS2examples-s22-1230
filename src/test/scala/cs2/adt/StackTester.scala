@@ -2,12 +2,32 @@ package cs2.adt
 
 import org.junit._
 import org.junit.Assert._
+import java.util.EmptyStackException
 
 class StackTester {
   var s:Stack[Int] = Stack[Int]()
 
   @Before def init():Unit = {
     s = Stack[Int]()
+  }
+
+  @Test def checkEmptyStackException():Unit = {
+    try {
+      s.pop()
+      //Should never get to here
+      assertTrue(false)
+    } catch {
+      case ex:EmptyStackException => { }
+    }
+    try {
+      s.push(1)
+      s.pop()
+    } catch {
+      case ex:EmptyStackException => {
+        //Should never get to here
+        assertTrue(false)
+      }
+    }
   }
 
   @Test def checkNotEmptyAfterPush():Unit = {

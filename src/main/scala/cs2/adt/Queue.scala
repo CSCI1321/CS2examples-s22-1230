@@ -7,6 +7,8 @@ abstract class Queue[A] {
   def isEmpty():Boolean
 }
 
+class EmptyQueueException extends Exception("Queue is empty")
+
 object Queue {
   def apply[A:Manifest]():Queue[A] = {
     new ArrayQueue[A]()
