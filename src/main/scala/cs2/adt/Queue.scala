@@ -11,6 +11,6 @@ class EmptyQueueException extends Exception("Queue is empty")
 
 object Queue {
   def apply[A:Manifest]():Queue[A] = {
-    new ArrayQueue[A]()
+    new LinkedQueue[A]()
   }
 }

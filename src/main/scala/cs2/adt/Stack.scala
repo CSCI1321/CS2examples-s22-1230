@@ -9,6 +9,6 @@ abstract class Stack[A] {
 
 object Stack {
   def apply[A:Manifest]():Stack[A] = {
-    new ArrayStack[A]()
+    new LinkedStack[A]()
   }
 }
