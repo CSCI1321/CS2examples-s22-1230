@@ -2,11 +2,20 @@ package cs2.adt
 
 abstract class Seq[A] extends Iterable[A] {
   def get(idx:Int):A
-  def set(idx:Int, elem:A)
-  def insert(idx:Int, elem:A)
-  def remove(idx:Int)
+  def set(idx:Int, elem:A):Unit
+  def insert(idx:Int, elem:A):Unit
+  def remove(idx:Int):Unit
   def length():Int
   def iterator:Iterator[A]
+
+  def prepend(elem:A):Unit = insert(0, elem)
+  def +:=(elem:A):Unit = prepend(elem)
+  def append(elem:A):Unit = insert(length(), elem)
+  def +=(elem:A):Unit = append(elem)
+
+  def apply(idx:Int):A = get(idx)
+  def update(idx:Int, elem:A):Unit = set(idx, elem)
+
 }
 
 object Seq {
@@ -20,7 +29,7 @@ object Seq {
     s.insert(0, 'B')
     s.insert(0, 'C')
     for(i <- 0 until s.length()) {
-      println(s.get(i))
+      println(s(i))
     }
 
     var it = s.iterator
