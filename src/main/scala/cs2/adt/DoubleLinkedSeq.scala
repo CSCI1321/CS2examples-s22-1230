@@ -7,16 +7,47 @@ class DoubleLinkedSeq[A : Manifest] extends Seq[A] {
   sent.prev = sent
   sent.next = sent
 
-  private def getNode(idx:Int):Node = {
-    var rover:Node = hed
-    for(ctr <- 0 until idx) {
-      rover = rover.next
+  class BidirectionalIterator extends Iterator[A] {
+    private var current:Node = sent.next
+    def hasNext:Boolean = {
+      current != sent
     }
-    rover
+    def next():A = {
+      val ret = current.data
+      current = current.next
+      ret
+    }
+    def hasPrevious:Boolean = {
+      current != sent
+    }
+    def previous():A = {
+      val ret = current.data
+      current = current.prev
+      ret
+    }
+
   }
 
-  def get(idx:Int):A = getNode(idx).data
-  def set(idx:Int, elem:A):Unit = getNode(idx).data = elem
+  private def getNode(idx:Int):Node = {
+    if(idx < 0) sent
+    else if(idx >= length()-1) sent.prev
+    else {
+      var rover:Node = sent.next
+      for(ctr <- 0 until idx) {
+        rover = rover.next
+      }
+      rover
+    }
+  }
+
+  def get(idx:Int):A = {
+    if(idx >= length() || idx < 0) throw new IndexOutOfBoundsException()
+    getNode(idx).data
+  }
+  def set(idx:Int, elem:A):Unit = {
+    if(idx >= length() || idx < 0) throw new IndexOutOfBoundsException()
+    getNode(idx).data = elem
+  }
   def insert(idx:Int, elem:A):Unit = {
     len += 1
     val bef = getNode(idx-1)
@@ -24,6 +55,7 @@ class DoubleLinkedSeq[A : Manifest] extends Seq[A] {
     bef.next.next.prev = bef.next
   }
   def remove(idx:Int):Unit = {
+    if(idx >= length() || idx < 0) throw new IndexOutOfBoundsException()
     len -= 1
     val rover = getNode(idx)
     rover.prev.next = rover.next
@@ -31,5 +63,5 @@ class DoubleLinkedSeq[A : Manifest] extends Seq[A] {
   }
 
   def length():Int = len
-  def iterator:Iterator[A] = ???
+  def iterator:Iterator[A] = new BidirectionalIterator()
 }

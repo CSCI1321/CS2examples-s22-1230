@@ -41,7 +41,7 @@ class LinkedSeq[A] extends Seq[A] {
 
   def iterator:Iterator[A] = {
     new Iterator[A]() {
-      var current:Node = hed
+      private var current:Node = hed
 
       def hasNext:Boolean = { current != null }
       def next():A = {
