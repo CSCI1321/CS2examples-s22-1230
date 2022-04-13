@@ -21,6 +21,9 @@ object FontExample extends JFXApp {
       //Saving the default font for later use
       val defaultFont:Font = g.getFont()
 
+      //Loading a custom Font from a .ttf file
+      val customFont:Font = Font.loadFont(getClass().getResourceAsStream("/fonts/Veinline.ttf"), 40)
+
       //Print out all available fonts
       println("Available fonts: " + Font.families)
 
@@ -40,10 +43,16 @@ object FontExample extends JFXApp {
         g.fillText("Hello - this is some sample text above a rectangle", 100, 100)
         g.fillRect(100,100, 300,50)
         
-        //Creating a custom font for use
+        //Creating a custom font for use from the built-in list
         g.setFont(Font("Serif",24))
         g.setFill(Color.BlueViolet)
         g.fillText(activeString, 150,400)
+
+        //Using a Font loaded in from a custom .ttf file
+        g.setFont(customFont)
+        g.setFill(Color.OliveDrab)
+        g.fillText("Custom Font Loaded from .ttf File", 300,200)
+
       })
       timer.start
         
