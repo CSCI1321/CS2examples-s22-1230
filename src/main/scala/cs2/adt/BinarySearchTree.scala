@@ -55,7 +55,9 @@ class BinarySearchTree[A <% Ordered[A]] {
     if(root == null) root = new Node(elem, null, null)
     else root.insert(elem)
   }
-  def remove(elem:A):Unit = ???
+  def remove(elem:A):Unit = {
+    root = root.remove(elem)
+  }
 
   def contains(elem:A):Boolean = {
     if(root == null) false else root.contains(elem)
@@ -73,6 +75,25 @@ class BinarySearchTree[A <% Ordered[A]] {
     }
     false*/
   }
+
+  def printInOrder():Unit = {
+    def workOnNode(n:Node):Unit = {
+      if(n.left != null) workOnNode(n.left)
+      print(n.data)
+      if(n.right != null) workOnNode(n.right)
+    }
+    workOnNode(root)
+  }
+
+  def printPreOrder():Unit = {
+    def workOnNode(n:Node):Unit = {
+      print(n.data)
+      if(n.left != null) workOnNode(n.left)
+      if(n.right != null) workOnNode(n.right)
+    }
+    workOnNode(root)
+  }
+
 
 
 }
