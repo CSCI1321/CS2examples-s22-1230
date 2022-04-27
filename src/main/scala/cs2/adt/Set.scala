@@ -5,7 +5,7 @@ abstract class Set[A <% Ordered[A]] extends Iterable[A] {
   def add(elem:A):Unit
   def remove(elem:A):Unit
   def contains(elem:A):Boolean
-  def size():Int
+  def size:Int
   //Need to define iterator():Iterator[A]
 
   //Concrete (derived) methods

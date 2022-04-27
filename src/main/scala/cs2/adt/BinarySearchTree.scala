@@ -1,6 +1,6 @@
 package cs2.adt
 
-class BinarySearchTree[A <% Ordered[A]] {
+class BinarySearchTree[A <% Ordered[A]] extends Iterable[A] {
   private class Node(var data:A, var left:Node, var right:Node) {
     def contains(elem:A):Boolean = {
       if(data <= elem && data >= elem) true //data.compareTo(elem) == 0
@@ -51,6 +51,12 @@ class BinarySearchTree[A <% Ordered[A]] {
   }
   private var root:Node = null
 
+  def getMax():A = {
+    val (n,v) = root.passUpMax()
+    root = n
+    v
+  }
+
   def insert(elem:A):Unit = {
     if(root == null) root = new Node(elem, null, null)
     else root.insert(elem)
@@ -94,6 +100,39 @@ class BinarySearchTree[A <% Ordered[A]] {
     workOnNode(root)
   }
 
+  def printPreOrderStack():Unit = {
+    val stk = Stack[Node]()
+    stk.push(root)
+    while(!stk.isEmpty()) {
+      val curr = stk.pop()
+      if(curr != null) {
+        stk.push(curr.right)
+        print(curr.data)
+        stk.push(curr.left)
+      }
+    }
+  }
+
+  def iterator:Iterator[A] = {
+    new Iterator[A] {
+      val stk = Stack[Node]()
+      stk.push(root)
+
+      def next():A = {
+        var curr = stk.pop()
+        while(curr == null) curr = stk.pop()
+        val ret = curr.data
+        stk.push(curr.right)
+        stk.push(curr.left)
+        ret
+      }
+      def hasNext:Boolean = {
+        while(!stk.isEmpty && stk.peek() == null) stk.pop()
+        !stk.isEmpty()
+      }
+
+    }
+  }
 
 
 }

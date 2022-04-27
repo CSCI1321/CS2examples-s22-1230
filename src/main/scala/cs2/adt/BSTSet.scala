@@ -17,8 +17,8 @@ class BSTSet[A <% Ordered[A]] extends Set[A] {
     }
   }
   def contains(elem:A):Boolean = bst.contains(elem)
-  override def size():Int = len
+  override def size:Int = len
 
-  def iterator():Iterator[A] = ???
+  def iterator:Iterator[A] = bst.iterator
 
 }

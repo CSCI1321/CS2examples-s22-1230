@@ -14,10 +14,23 @@ import scalafx.scene.image.Image
 object FirstWindow extends JFXApp {
   stage = new JFXApp.PrimaryStage {
     title = "My First Window"
-    scene = new Scene(800,600) {
-      val canvas = new Canvas(800,600)
+    scene = new Scene(600,600) {
+      val canvas = new Canvas(600,600)
       content = canvas
       val g = canvas.graphicsContext2D
+
+      def drawCircle(x:Double, y:Double, r:Double):Unit = {
+        g.strokeOval(x-r,y-r, r*2,r*2)
+        if(r > 2) {
+          drawCircle(x-r,y, r/2)
+          drawCircle(x+r,y, r/2)
+          drawCircle(x,y-r, r/2)
+          drawCircle(x,y+r, r/2)
+        }
+      }
+
+      drawCircle(300,300,150)
+
       /*
       g.strokeLine(0,0, 400,200)
       g.setStroke(Color.RoyalBlue)
@@ -31,7 +44,7 @@ object FirstWindow extends JFXApp {
         g.strokeLine(x,0, x,height.value)
       }
       */
-
+      /*
       canvas.onMouseDragged = (e:MouseEvent) => {
         g.strokeLine(width.value/2,height.value/2, e.x,e.y)
       }
@@ -67,7 +80,7 @@ object FirstWindow extends JFXApp {
         }
       })
       timer.start
-        
+      */
     }
   }
 }
