@@ -8,8 +8,8 @@ abstract class PriorityQueue[A <% Ordered[A]] {
 }
 
 object PriorityQueue {
-  def apply[A <% Ordered[A]]():PriorityQueue[A] = {
-    new LinkedPriorityQueue[A]()
+  def apply[A <% Ordered[A] : Manifest]():PriorityQueue[A] = {
+    new HeapPriorityQueue[A]()
   }
 }
 
