@@ -7,7 +7,8 @@ scalaVersion := "2.13.5"
 libraryDependencies ++= Seq(
   "org.scalafx"   %% "scalafx"   % "16.0.0-R24",
   "com.github.sbt" % "junit-interface" % "0.13.2" % Test,
-  "org.scalatest" %% "scalatest" % "3.2.9" % "test" //http://www.scalatest.org/download
+  "org.scalatest" %% "scalatest" % "3.2.9" % "test", //http://www.scalatest.org/download
+  "org.scala-lang.modules" %% "scala-parallel-collections" % "2.13.5"
 )
 libraryDependencies ++= javaFXModules
 
